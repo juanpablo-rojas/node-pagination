@@ -46,7 +46,6 @@
     "eslint-config-prettier": "^6.6.0",
     "eslint-config-wolox": "^3.0.2",
     "eslint-config-wolox-node": "^2.2.0",
-    "eslint-config-xo": "^0.27.2",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^3.1.0",
