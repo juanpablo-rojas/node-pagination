@@ -6,10 +6,10 @@
     "npm": ">= 4.0.0",
     "node": "12.15.0"
   },
-  "main": "generators/index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "jest --silent --runInBand --forceExit --detectOpenHandles --passWithNoTests",
-    "test-debug": "node --inspect node_modules/.bin/jest --runInBand --forceExit --detectOpenHandles --passWithNoTests",
+    "test": "NODE_ENV=testing jest --silent --runInBand --forceExit --detectOpenHandles --passWithNoTests",
+    "test-debug": "NODE_ENV=testing node --inspect node_modules/.bin/jest --runInBand --forceExit --detectOpenHandles --passWithNoTests",
     "eslint-check": "eslint --print-config .eslintrc.js --ignore-pattern ./.eslintrc.js | eslint-config-prettier-check",
     "lint": "eslint \"**/*.js\" --ignore-pattern ./.eslintrc.js",
     "lint-diff": "git diff --name-only --cached --relative | grep \\\\.js$ | xargs eslint",
@@ -17,7 +17,17 @@
     "outdated": "npm outdated --depth 0",
     "pretest": "npm run lint",
     "prestart": "npm run lint",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "create-db": "npx sequelize-cli db:create",
+    "create-db-test": "NODE_ENV=testing npx sequelize-cli db:create",
+    "drop-db": "npx sequelize-cli db:drop",
+    "drop-db-test": "NODE_ENV=testing npx sequelize-cli db:drop",
+    "migrations": "sequelize db:migrate",
+    "migrations-undo": "npx sequelize-cli db:migrate:undo",
+    "migrations-test": "NODE_ENV=testing sequelize db:migrate",
+    "migrations-test-undo": "NODE_ENV=testing npx sequelize-cli db:migrate:undo",
+    "start": "node test/server.js",
+    "start-debug": "node --inspect test/server.js"
   },
   "repository": {
     "type": "git",
@@ -39,7 +49,16 @@
     "pagination"
   ],
   "homepage": "https://github.com/juanpablo-rojas/node-pagination#readme",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.17.1",
+    "express-validator": "^6.3.0",
+    "express-wolox-logger": "1.1.0",
+    "factory-girl": "^5.0.4",
+    "pg": "^7.4.1",
+    "sequelize": "^5.10.1",
+    "umzug": "^2.1.0"
+  },
   "devDependencies": {
     "ajv": "^5.5.2",
     "eslint": "^5.9.0",
@@ -52,12 +71,18 @@
     "jest": "^24.8.0",
     "lint-staged": "^9.4.3",
     "prettier": "^1.19.1",
-    "prettier-eslint": "^8.8.2"
+    "prettier-eslint": "^8.8.2",
+    "dotenv": "^5.0.0",
+    "supertest": "^4.0.2",
+    "sequelize-cli": "^4.1.1"
   },
   "jest": {
     "testEnvironment": "node",
     "testMatch": [
       "**/test/**/*.spec.js?(x)"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/test/setup.js"
     ],
     "clearMocks": true
   },
