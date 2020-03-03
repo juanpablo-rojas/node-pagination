@@ -1,15 +1,14 @@
-const app = require('./app');
-const migrationsManager = require('./migrations');
-const config = require('./config');
-const logger = require('./app/logger');
+const http = require('http');
+const { testScenarios } = require('./server_test_scenarios');
 
-const port = config.common.api.port || 8080;
-
-Promise.resolve()
-  .then(() => migrationsManager.check())
-  .then(() => {
-    app.listen(port);
-
-    logger.info(`Listening on port: ${port}`);
-  })
-  .catch(logger.error);
+exports.createServer = (content = []) =>
+  http.createServer((req, res) => {
+    if (req.method === 'GET') {
+      testScenarios.forEach(scenario => {
+        if (req.url === scenario.testUrl) {
+          scenario.action(req, res, content);
+        }
+      });
+    }
+    res.end();
+  });

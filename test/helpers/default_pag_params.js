@@ -1,4 +1,4 @@
-const nodePagination = require('../../..');
+const nodePagination = require('../..');
 
 exports.defaultPagParams = request => ({
   page_count: nodePagination.default_limit,
