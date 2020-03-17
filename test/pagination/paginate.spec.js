@@ -5,7 +5,6 @@ const { defaultPagParams } = require('../helpers/default_pag_params');
 const { createServer } = require('../server');
 const { customPagParams } = require('../helpers/custom_pag_params');
 const factory = require('../factory/fake_model');
-const { INVALID_PAGE_NUMBER, INVALID_LIMIT_NUMBER } = require('../../lib/pagination/errors');
 
 const testUrls = {
   index: '/index',
@@ -56,15 +55,16 @@ describe.each`
 
 describe('Request pagination with invalid params', () => {
   it.each`
-    param      | testUrl                         | error
-    ${'page'}  | ${testUrls.indexPageException}  | ${INVALID_PAGE_NUMBER}
-    ${'limit'} | ${testUrls.indexLimitException} | ${INVALID_LIMIT_NUMBER}
+    param      | testUrl
+    ${'page'}  | ${testUrls.indexPageException}
+    ${'limit'} | ${testUrls.indexLimitException}
   `(
     'responds with an error when an invalid $param is sent in options to paginate method',
-    async ({ testUrl, error }) => {
+    async ({ testUrl }) => {
       const response = await makeRequest(testUrl);
-      expect(response.body.internalCode).toBe(error);
       expect(response.statusCode).toBe(500);
+      expect(response.serverError).toBe(true);
+      expect(response.error).toBeInstanceOf(Error);
     }
   );
 });
