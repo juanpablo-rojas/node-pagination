@@ -16,7 +16,7 @@ It is also posible to change the default values of the `page` and `limit` option
 ## Installing
 To install the package, just simply type in terminal:
 ```bash
-$ npm i node-pagination
+$ npm i @wolox/pagination-node
 ```
 
 ## Glossary
@@ -39,7 +39,7 @@ $ npm i node-pagination
 ## Usage
 After installing the package, all you have to do is require it inside the file were you want to paginate something:
 ```js
-const nodePagination = require('node-pagination');
+const nodePagination = require('@wolox/pagination-node');
 ```
 Then, when you have the collection you want to paginate, you can make use of the `paginate` method of the package in any of the following ways
 
@@ -64,8 +64,11 @@ const paginatedResponse = nodePagination.paginate(collection, request, { page: 2
 ```
 
 `collection`: This parameter could also be named as `content` and it represents the group of objects you want to paginate. This must be an Array, otherwise the `paginate` method will throw an error.
+
 `request`: Used to concat a string url that leads to the previous and next pages. This should be an `IncomingMessage` object given that it uses the `request.headers.host` and `request.url` attributes to arrange a valid url string, otherwise those urls will return null.
+
 `options`: An object containing options to modify the requested page. So far, only `page` and `limit` options are allowed.
+
 
 ### Default option values
 * `page`: 1
@@ -78,6 +81,8 @@ nodePagination.defaultLimit = NEW_LIMIT;
 nodePagination.defaultPage = NEW_PAGE;
 ```
 It's recommended to do this on a setup/startup step of the applicacion that requires the tool, for example requiring it and changing its default values in a script that runs before a controller rendering the result using the tool itself.
+
+
 
 
 
