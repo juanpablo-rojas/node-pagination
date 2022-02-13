@@ -39,7 +39,7 @@
   ],
   "homepage": "https://github.com/juanpablo-rojas/node-pagination#readme",
   "devDependencies": {
-    "ajv": "^5.5.2",
+    "ajv": "^6.12.3",
     "eslint": "^5.9.0",
     "eslint-config-prettier": "^6.6.0",
     "eslint-config-wolox": "^3.0.2",
